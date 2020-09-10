@@ -128,7 +128,7 @@ module add_Fixed # ( parameter  WI1 = 4, WF1 = 4,    // input 1 integer and frac
         end
     end
     
-    assign out = in1_Temp2 + in2_Temp2;
+    assign out = {temp_out_int_bits , temp_out_frac_bits};
     
 endmodule
 
