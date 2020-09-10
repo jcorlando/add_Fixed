@@ -8,30 +8,41 @@ module add_Fixed # ( parameter  WI1 = 4, WF1 = 4,    // input 1 integer and frac
     input RESET,
     input signed [WI1 + WF1 - 1 : 0] in1,       // Add # 1
     input signed [WI2 + WF2 - 1 : 0] in2,       // Add # 2
-    output reg signed [WIO + WFO - 1 : 0] out,  // Output
+    output signed [WIO + WFO - 1 : 0] out,      // Output
     output OVF                                  // Overflow flag
 );
     // Local Parameters; Precise addition parameters
     localparam WIP = WI1 > WI2 ? WI1 + 1 : WI2 + 1;     // local parameters for Precise integer bits
     localparam WFP = WF1 > WF2 ? WF1 : WF2;             // local parameters for Precise fraction bits
+    
+    // Used to align the decimal points
+    reg [WIP + WFP - 2 : 0] in1_Temp;
+    reg [WIP + WFP - 2 : 0] in2_Temp;
+    // Same as above but with the sign bit
+    reg [WIP + WFP - 1 : 0] in1_Temp2;      //  These have the aligned values in them
+    reg [WIP + WFP - 1 : 0] in2_Temp2;      //  These have the aligned values in them
+    
     // Determine which inputs have the smallest WI's or WF's
     wire smallest_WI = WI1 < WI2 ? 1 : 0;    // 1 means WI1 is smaller; 0 means WI2 is smaller
     wire smallest_WF = WF1 < WF2 ? 1 : 0;    // 1 means WF1 is smaller; 0 means WF2 is smaller
+    
+    // Temporary registers for output
+    reg [WIO - 1 : 0] temp_out_int_bits;
+    reg [WFO - 1 : 0] temp_out_frac_bits;
+    
+    // Compute the full precision product
+    wire signed [WIP + WFP - 1 : 0] fullPreciseProduct = in1_Temp2 + in2_Temp2;     // Precise product
+    
     
     wire [WI1 - 1 : 0] In1_int_bits  = in1[WI1 + WF1 - 1 : WF1];  // Just the integer  bits of in1
     wire [WF1 - 1 : 0] In1_frac_bits = in1[WF1 - 1 : 0];          // Just the fraction bits of in1
     wire [WI2 - 1 : 0] In2_int_bits  = in2[WI2 + WF2 - 1 : WF2];  // Just the integer  bits of in2
     wire [WF2 - 1 : 0] In2_frac_bits = in2[WF2 - 1 : 0];          // Just the fraction bits of in2
     
-    // Used to align the decimal points
-    reg [WIP + WFP - 2 : 0] in1_Temp;
-    reg [WIP + WFP - 2 : 0] in2_Temp;
-    // Same as above but with the sign bit
-    reg [WIP + WFP - 1 : 0] in1_Temp2;
-    reg [WIP + WFP - 1 : 0] in2_Temp2;
-    
     always @ (*)
     begin
+        if(RESET) begin in1_Temp <= 0; in2_Temp <= 0; end
+        else
         if(smallest_WI && smallest_WF) // WI1 is smaller; WF1 is smaller
         begin
             in1_Temp <= in1 <<< (WF2 - WF1) ;  // {(WI2 - WI1){in1[WI1 + WF1 - 1]}}
@@ -56,7 +67,37 @@ module add_Fixed # ( parameter  WI1 = 4, WF1 = 4,    // input 1 integer and frac
         in1_Temp2 <= { in1_Temp[WIP + WFP - 2] , in1_Temp };
         in2_Temp2 <= { in2_Temp[WIP + WFP - 2] , in2_Temp };
         
+        // -------------------------Output Bitwidth logic
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
     end
+    
+    assign out = in1_Temp2 + in2_Temp2;
     
 endmodule
 

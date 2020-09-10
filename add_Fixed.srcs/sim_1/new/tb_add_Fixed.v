@@ -2,8 +2,8 @@
 
 module tb_add_Fixed;
 // parameters
-parameter WI1 = 4, WF1 = 4,                     // input 1 integer and fraction bits
-          WI2 = 3, WF2 = 2,                     // input 2 integer and fraction bits
+parameter WI1 = 5, WF1 = 3,                     // input 1 integer and fraction bits
+          WI2 = 3, WF2 = 6,                     // input 2 integer and fraction bits
           WIO = WI1 > WI2 ? WI1 + 1 : WI2 + 1,  // output integer bits; WI1 > WI2 ? WI1 + 1 : WI2 + 1
           WFO = WF1 > WF2 ? WF1 : WF2;          // output fraction bits; WF1 > WF2 ? WF1 : WF2
 // Local Parameters                            
@@ -33,24 +33,24 @@ add_Fixed #( .WI1(WI1), .WF1(WF1), .WI2(WI2), .WF2(WF2), .WIO(WIO), .WFO(WFO) )
 initial
 begin
     RESET <= 0;
-    in1 <= 8'b01001010;
-    in2 <= 7'b0011010;
-//    # 150;
-//    # 150;
-//    in1 <= 8'b0_1011_111;
-//    in2 <= 9'b1_11_100110;
-//    # 150;
-//    in1 <= 8'b0_0101_100;
-//    in2 <= 9'b0_10_100111;
-//    # 150;
-//    RESET <= 1;
-//    # 150;
-//    RESET <= 0;
-//    in1 <= 8'b1_1111_001;
-//    in2 <= 9'b1_01_000011;
-//    # 150;
-//    in1 <= 8'b0_0101_100;
-//    in2 <= 9'b0_01_100111;
+    in1 <= 8'b0_1001_010;
+    in2 <= 9'b0_11_100110;
+    # 150;
+    # 150;
+    in1 <= 8'b0_1011_111;
+    in2 <= 9'b1_11_100110;
+    # 150;
+    in1 <= 8'b0_0101_100;
+    in2 <= 9'b0_10_100111;
+    # 150;
+    RESET <= 1;
+    # 150;
+    RESET <= 0;
+    in1 <= 8'b1_1111_001;
+    in2 <= 9'b1_01_000011;
+    # 150;
+    in1 <= 8'b0_0101_100;
+    in2 <= 9'b0_01_100111;
 end
 
 endmodule
